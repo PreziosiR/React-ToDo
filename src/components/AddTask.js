@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 class AddTask extends Component {
 
     handleSubmit = (e) => {
+        console.log(this.newTask.value )
         e.preventDefault()
         this.props.onAddTask(this.newTask.value)
         this.props.history.push('/')

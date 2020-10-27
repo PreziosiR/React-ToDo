@@ -29,10 +29,18 @@ class App extends React.Component{
             name: newTaskName,
             completed: false
         }
-
         this.setState(prevState => ({
             tasks: [...prevState.tasks, newTask]
         }))
+    }
+
+    onDeleteCompleted = () => {
+        this.setState(prevState => {
+            let newState = prevState.tasks.filter(task => !task.completed)
+            return {
+                tasks: newState
+            }
+        })
     }
 
     render(){
@@ -41,9 +49,9 @@ class App extends React.Component{
                 <BrowserRouter>
                     <Switch>
                         <Route path="/add-task" render={(props) => <AddTask {...props} onAddTask={this.onAddTask} />} />
-                        <Route path="/:filter?" render={(props) => <ToDoList {...props} tasks={initialData} onToggleCompleted={this.onToggleCompleted}/>} />
+                        <Route path="/:filter?" render={(props) => <ToDoList {...props} tasks={this.state.tasks} onToggleCompleted={this.onToggleCompleted}/>} />
                     </Switch>
-                    <NavBar />
+                    <NavBar onDeleteCompleted={this.onDeleteCompleted} />
                 </BrowserRouter>
             </section>
         )
